@@ -20,9 +20,9 @@ print(token)
 print(databaseId)
 
 def readDatabase(databaseId, headers):
-  readUrl = f'https://api.notion.com/v1/databases/{databaseId}'
+  readUrl = f'https://api.notion.com/v1/databases/{databaseId}/query'
 
-  res = requests.request("GET", readUrl, headers=headers)
+  res = requests.request("POST", readUrl, headers=headers)
 
   # test data
   data = res.json()
