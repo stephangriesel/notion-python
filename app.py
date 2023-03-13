@@ -3,6 +3,7 @@ load_dotenv()
 
 import os 
 import requests
+import json
 
 # Get environment details
 # print(os.environ)
@@ -22,7 +23,15 @@ def readDatabase(databaseId, headers):
   readUrl = f'https://api.notion.com/v1/databases/{databaseId}'
 
   res = requests.request("GET", readUrl, headers=headers)
+
+  # test data
+  data = res.json()
   print(res.status_code)
+  # print(res.text)
+
+  # dump data in file
+  with open('./db.json', 'w', encoding='utf8') as f:
+    json.dump(data, f, ensure_ascii=False)
 
 def createPage():
   pass
