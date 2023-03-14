@@ -13,6 +13,7 @@ databaseId = os.environ.get("DATABASE_ID")
 
 headers = {
   "Authorization": "Bearer " + token,
+  "Content-Type": "application/json",
   "Notion-Version": "2022-06-28"
 }
 
@@ -33,10 +34,54 @@ def readDatabase(databaseId, headers):
   with open('./db.json', 'w', encoding='utf8') as f:
     json.dump(data, f, ensure_ascii=False)
 
-def createPage():
-  pass
+def createPage(databaseId,headers):
+  
+  createUrl = 'https://api.notion.com/v1/pages'
+
+  newPageData = {
+    "parent": {"database_id": databaseId},
+    "properties": {
+      "Name": {
+        "title": [
+          {
+            "text": {
+              "content": "Hello One"
+            }
+          }
+        ]
+
+      },
+      "Value": {
+        "rich_text": [
+          {
+            "text": {
+              "content": "This is one"
+            }
+          }
+        ]
+
+      },
+      "Status": {
+        "rich_text": [
+          {
+            "text": {
+              "content": "Active"
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  data = json.dumps(newPageData)
+
+  res = requests.request("POST", createUrl, headers=headers, data=data)
+
+  print(res.status_code)
+  print(res.text)
 
 def updatePage():
   pass
 
-readDatabase(databaseId,headers)
+# readDatabase(databaseId,headers)
+createPage(databaseId, headers)
