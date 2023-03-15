@@ -80,8 +80,26 @@ def createPage(databaseId,headers):
   print(res.status_code)
   print(res.text)
 
-def updatePage():
-  pass
+def updatePage(pageId, headers):
+  updateUrl = f"https://api.notion.com/v1/pages/{pageId}"
+
+  updateData = {
+    "properties": {
+      "Value": {
+        "rich_text":[
+          {
+            "text":{
+              "content":"Pretty Good"
+            }
+          }
+        ]
+      }
+    }
+  }
+
+  data = json.dumps(updateData)
+
+  response = requests.request("PATCH", updateUrl, headers=headers, data=data)
 
 # readDatabase(databaseId,headers)
 createPage(databaseId, headers)
